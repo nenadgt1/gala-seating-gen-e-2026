@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Gala Seating Moderator</title>
+  <link rel="stylesheet" href="/assets/app.css">
+</head>
+<body>
+  <main class="app-shell">
+    <section class="hero">
+      <div>
+        <p class="kicker">Moderator portal</p>
+        <h1>Request seating changes</h1>
+        <p>Select an attendee, select the requested table, and submit it for admin approval.</p>
+      </div>
+      <div class="hero-actions"><span class="badge" data-mod-status>Loading</span></div>
+    </section>
+
+    <section class="panel login-box hidden" data-login-panel>
+      <h2>Moderator login</h2>
+      <p class="muted">Enter the moderator password to open the request panel.</p>
+      <div class="field">
+        <label>Password</label>
+        <input type="password" data-mod-password autocomplete="current-password">
+      </div>
+      <div class="actions-row" style="margin-top:10px">
+        <button class="btn" type="button" data-mod-login>Open moderator panel</button>
+      </div>
+      <div data-mod-login-message style="margin-top:10px"></div>
+    </section>
+
+    <section class="layout wide-left hidden" data-moderator-app>
+      <aside class="panel">
+        <h2>Submitter details</h2>
+        <div class="controls">
+          <div class="field"><label>Your name</label><input data-submitter-name placeholder="Name Surname"></div>
+          <div class="field"><label>Your email</label><input data-submitter-email type="email" placeholder="name@example.com"></div>
+          <div class="field"><label>Organisation</label><input data-submitter-org placeholder="Organisation"></div>
+        </div>
+        <hr style="border:0;border-top:1px solid var(--line);margin:16px 0">
+        <h2>1. Find attendee</h2>
+        <div class="field"><label>Search</label><input type="search" data-search placeholder="Search by name, email, organisation"></div>
+        <div class="result-list" data-results style="margin-top:12px;max-height:360px"><p class="muted">Search for the attendee.</p></div>
+        <hr style="border:0;border-top:1px solid var(--line);margin:16px 0">
+        <h2>2. Selected request</h2>
+        <div data-selection><p class="muted">No attendee or table selected yet.</p></div>
+        <div class="field" style="margin-top:10px"><label>Note for admin</label><textarea data-note placeholder="Optional context"></textarea></div>
+        <div class="actions-row" style="margin-top:10px"><button class="btn" data-submit-request disabled>Submit request</button></div>
+        <div data-message style="margin-top:10px"></div>
+      </aside>
+
+      <section class="panel map-panel">
+        <div class="map-toolbar">
+          <strong>3. Choose requested table</strong>
+          <span>Requests wait for admin approval</span>
+        </div>
+        <div data-map></div>
+      </section>
+    </section>
+  </main>
+  <script src="/assets/shared.js"></script>
+  <script src="/assets/moderator.js"></script>
+</body>
+</html>

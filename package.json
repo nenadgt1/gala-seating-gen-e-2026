@@ -1,0 +1,14 @@
+{
+  "name": "gala-seating-hosted-app",
+  "version": "1.0.0",
+  "description": "Standalone hosted gala seating app with viewer, moderator and password protected admin panel.",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "license": "UNLICENSED",
+  "private": true
+}

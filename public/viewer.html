@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Gala Seating Finder</title>
+  <link rel="stylesheet" href="/assets/app.css">
+</head>
+<body>
+  <main class="app-shell">
+    <section class="hero">
+      <div>
+        <p class="kicker">Gala Seating System</p>
+        <h1>Find your gala table</h1>
+        <p>Search by name, organisation, country, or click a table on the room plan.</p>
+      </div>
+      <div class="hero-actions">
+        <span class="badge" data-status>Loading seating data</span>
+      </div>
+    </section>
+
+    <section class="panel controls">
+      <div class="search-row">
+        <div class="field">
+          <label>Search attendee</label>
+          <input type="search" data-search placeholder="Example: Ana, JA Europe, Spain">
+        </div>
+        <button class="btn ghost" type="button" data-clear>Clear</button>
+      </div>
+      <div class="filter-grid" data-filters></div>
+    </section>
+
+    <section class="layout">
+      <aside class="panel">
+        <div class="panel-title">
+          <h2>Results</h2>
+          <span class="muted small" data-count></span>
+        </div>
+        <div class="result-list" data-results>
+          <p class="muted">Start typing or use a filter to find a person.</p>
+        </div>
+      </aside>
+
+      <section class="panel map-panel">
+        <div class="map-toolbar">
+          <strong>Room plan</strong>
+          <span>All tables are limited to 10 people</span>
+        </div>
+        <div data-map></div>
+      </section>
+    </section>
+  </main>
+
+  <script src="/assets/shared.js"></script>
+  <script src="/assets/viewer.js"></script>
+</body>
+</html>

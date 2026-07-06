@@ -1,0 +1,3 @@
+first_name,last_name,email,organisation,position,country,gender,ja_profile,registration_type,admission_item,dietary_requirements,additional_comments,departure_date,table_number
+Example,Guest,example.guest@example.org,JA Europe,Guest,Belgium,,Partner,Gen-E Gala,Dinner,Vegetarian,,,1A
+Second,Guest,second.guest@example.org,JA Europe,Guest,Latvia,,Partner,Gen-E Gala,Dinner,,,,2A

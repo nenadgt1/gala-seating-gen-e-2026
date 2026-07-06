@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Gala Seating Admin</title>
+  <link rel="stylesheet" href="/assets/app.css">
+</head>
+<body>
+  <main class="app-shell">
+    <section class="hero">
+      <div>
+        <p class="kicker">Private admin panel</p>
+        <h1>Gala seating admin</h1>
+        <p>Import attendees, assign tables, and approve moderator requests. This page is password protected.</p>
+      </div>
+      <div class="hero-actions">
+        <span class="badge" data-admin-status>Locked</span>
+        <button class="btn ghost hidden" type="button" data-logout>Log out</button>
+      </div>
+    </section>
+
+    <section class="panel login-box" data-login-panel>
+      <h2>Admin login</h2>
+      <p class="muted">Enter the admin password.</p>
+      <div class="field"><label>Password</label><input data-admin-password type="password" autocomplete="current-password"></div>
+      <div class="actions-row" style="margin-top:10px"><button class="btn" data-admin-login>Open admin</button></div>
+      <div data-login-message style="margin-top:10px"></div>
+    </section>
+
+    <section class="hidden" data-admin-app>
+      <section class="panel">
+        <div class="panel-title">
+          <h2>Overview</h2>
+          <button class="btn ghost" data-refresh>Refresh</button>
+        </div>
+        <div class="stats" data-stats></div>
+      </section>
+
+      <section class="admin-grid">
+        <aside class="sidebar">
+          <section class="panel">
+            <h2>Import attendees</h2>
+            <div class="import-zone">
+              <div class="field"><label>CSV file</label><input type="file" accept=".csv,text/csv" data-csv-file></div>
+              <div class="field"><label>Or paste CSV</label><textarea data-csv-text placeholder="first_name,last_name,email,organisation,...,table_number"></textarea></div>
+              <div class="field"><label>Import mode</label><select data-import-mode><option value="upsert">Update existing and add new</option><option value="replace">Replace all attendees</option></select></div>
+              <button class="btn" data-import>Import CSV</button>
+              <button class="btn ghost" data-export>Export current CSV</button>
+              <div data-import-message></div>
+            </div>
+          </section>
+
+          <section class="panel">
+            <h2>Add attendee</h2>
+            <div class="controls" data-add-form>
+              <div class="field"><label>First name</label><input data-add="first_name"></div>
+              <div class="field"><label>Last name</label><input data-add="last_name"></div>
+              <div class="field"><label>Email</label><input data-add="email" type="email"></div>
+              <div class="field"><label>Organisation</label><input data-add="organisation"></div>
+              <div class="field"><label>Country</label><input data-add="country"></div>
+              <div class="field"><label>Table</label><select data-add="table_id" data-table-select><option value="">Unassigned</option></select></div>
+              <button class="btn" data-add-attendee>Add attendee</button>
+              <div data-add-message></div>
+            </div>
+          </section>
+        </aside>
+
+        <section>
+          <section class="panel">
+            <div class="panel-title">
+              <h2>Pending moderator requests</h2>
+              <span class="muted small">Approve or reject</span>
+            </div>
+            <div data-pending-list class="result-list" style="max-height:420px"></div>
+          </section>
+
+          <section class="panel">
+            <div class="panel-title">
+              <h2>People and tables</h2>
+              <span class="muted small" data-admin-count></span>
+            </div>
+            <div class="search-row">
+              <div class="field"><label>Search attendees</label><input type="search" data-search placeholder="Name, email, organisation, table"></div>
+              <button class="btn ghost" data-clear-search>Clear</button>
+            </div>
+            <div class="actions-row" style="margin:12px 0">
+              <select data-bulk-table style="max-width:240px"><option value="">Bulk table...</option></select>
+              <button class="btn" data-bulk-assign>Assign selected</button>
+              <button class="btn ghost" data-bulk-unassign>Unassign selected</button>
+            </div>
+            <div data-attendees-list class="result-list" style="max-height:560px"></div>
+          </section>
+
+          <section class="panel">
+            <div class="panel-title">
+              <h2>Table status</h2>
+              <span class="muted small">Click a table to highlight it on the map</span>
+            </div>
+            <div class="table-grid" data-table-grid></div>
+          </section>
+
+          <section class="panel map-panel">
+            <div class="map-toolbar"><strong>Real seating map</strong><span data-map-help>Select table cards or attendee table values to highlight.</span></div>
+            <div data-map></div>
+          </section>
+        </section>
+      </section>
+    </section>
+  </main>
+
+  <script src="/assets/shared.js"></script>
+  <script src="/assets/admin.js"></script>
+</body>
+</html>

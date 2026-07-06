@@ -1,0 +1,27 @@
+services:
+  - type: web
+    name: gala-seating-system
+    env: node
+    plan: starter
+    buildCommand: npm install
+    startCommand: npm start
+    healthCheckPath: /health
+    disk:
+      name: gala-seating-data
+      mountPath: /data
+      sizeGB: 1
+    envVars:
+      - key: NODE_VERSION
+        value: 20
+      - key: DATA_FILE
+        value: /data/gala-data.json
+      - key: FRAME_ANCESTORS
+        value: "*"
+      - key: ADMIN_PATH
+        sync: false
+      - key: APP_SECRET
+        generateValue: true
+      - key: ADMIN_PASSWORD
+        sync: false
+      - key: MODERATOR_PASSWORD
+        sync: false
