@@ -9,11 +9,7 @@ async function initViewer() {
   renderMap(qs('[data-map]'), state.tables, loadTableModal);
   renderFilters(filtersData.filters, qs('[data-filters]'), [
     ['organisation', 'Organisation'],
-    ['country', 'Country'],
-    ['registration_type', 'Registration type'],
-    ['admission_item', 'Admission item'],
-    ['table_section', 'Section'],
-    ['table_number', 'Table']
+    ['country', 'Country']
   ]);
   qs('[data-status]').textContent = `${state.tables.length} tables loaded`;
   bindViewer();

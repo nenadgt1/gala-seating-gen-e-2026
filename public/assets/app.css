@@ -51,8 +51,9 @@ input:focus, select:focus, textarea:focus { border-color: var(--teal); box-shado
 .btn.ok { background: var(--ok); }
 .btn:disabled { opacity: 0.55; cursor: not-allowed; }
 
-.layout { display: grid; grid-template-columns: 420px minmax(0, 1fr); gap: 16px; align-items: start; }
-.layout.wide-left { grid-template-columns: 520px minmax(0, 1fr); }
+.layout { display: grid; grid-template-columns: 1fr; gap: 16px; align-items: start; }
+.layout.wide-left { grid-template-columns: 1fr; }
+.viewer-layout .result-list { max-height: 360px; }
 .result-list { display: grid; gap: 9px; max-height: 630px; overflow: auto; padding-right: 4px; }
 .result-card { border: 1px solid var(--line); border-radius: 16px; padding: 12px; background: #fff; display: grid; gap: 6px; }
 .result-card.is-selected { border-color: var(--teal); box-shadow: 0 0 0 3px rgba(23,115,134,0.13); }
@@ -65,14 +66,14 @@ input:focus, select:focus, textarea:focus { border-color: var(--teal); box-shado
 .map-panel { overflow: hidden; }
 .map-toolbar { display: flex; justify-content: space-between; gap: 10px; align-items: center; margin-bottom: 12px; color: var(--muted); }
 .map-scroll { width: 100%; overflow: auto; border-radius: 18px; border: 1px solid var(--line); background: #dce6e8; }
-.real-map { position: relative; width: 100%; min-width: 720px; }
+.real-map { position: relative; width: 100%; min-width: 980px; margin: 0 auto; }
 .real-map img { display: block; width: 100%; height: auto; }
-.map-pin { position: absolute; left: var(--x); top: var(--y); transform: translate(-50%, -50%); border: 2px solid rgba(255,255,255,0.94); background: var(--teal); color: #fff; border-radius: 12px; min-width: 46px; min-height: 34px; padding: 3px 5px; box-shadow: 0 8px 18px rgba(0,0,0,0.22); display: grid; place-items: center; gap: 0; transition: transform 0.16s, box-shadow 0.16s, background 0.16s; }
-.map-pin:hover { transform: translate(-50%, -50%) scale(1.06); z-index: 4; }
+.map-pin { position: absolute; left: var(--x); top: var(--y); transform: translate(-50%, -50%); border: 2px solid rgba(255,255,255,0.96); background: var(--teal); color: #fff; border-radius: 999px; width: clamp(32px, 3.1vw, 40px); height: clamp(32px, 3.1vw, 40px); min-width: 0; min-height: 0; padding: 0; box-shadow: 0 8px 18px rgba(0,0,0,0.22); display: grid; place-items: center; gap: 0; transition: transform 0.16s, box-shadow 0.16s, background 0.16s; }
+.map-pin:hover { transform: translate(-50%, -50%) scale(1.08); z-index: 4; }
 .map-pin.is-full { background: var(--danger); }
 .map-pin.is-active { background: #e3e24f; color: var(--dark); animation: blink 0.95s ease-in-out infinite; z-index: 5; box-shadow: 0 0 0 8px rgba(227,226,79,0.24), 0 12px 26px rgba(0,0,0,0.3); }
-.pin-label { font-size: 12px; font-weight: 900; line-height: 1; }
-.pin-count { font-size: 10px; opacity: 0.9; line-height: 1; }
+.pin-label { font-size: clamp(10px, 0.95vw, 13px); font-weight: 900; line-height: 1; }
+.pin-count { display: none; }
 @keyframes blink { 0%,100% { filter: brightness(1); } 50% { filter: brightness(1.28); } }
 
 .modal-backdrop { position: fixed; inset: 0; background: rgba(10, 24, 29, 0.54); display: grid; place-items: center; padding: 16px; z-index: 50; }
@@ -103,8 +104,8 @@ input:focus, select:focus, textarea:focus { border-color: var(--teal); box-shado
 .request-card { display: grid; gap: 8px; border: 1px solid var(--line); border-radius: 16px; padding: 12px; }
 
 @media (max-width: 1100px) {
-  .layout, .layout.wide-left, .admin-grid { grid-template-columns: 1fr; }
-  .filter-grid { grid-template-columns: repeat(3, minmax(120px, 1fr)); }
+  .admin-grid { grid-template-columns: 1fr; }
+  .filter-grid { grid-template-columns: repeat(2, minmax(120px, 1fr)); }
   .sidebar { position: static; }
 }
 @media (max-width: 760px) {
@@ -113,7 +114,9 @@ input:focus, select:focus, textarea:focus { border-color: var(--teal); box-shado
   .hero-actions { justify-content: flex-start; }
   .search-row, .filter-grid { grid-template-columns: 1fr; }
   .panel { border-radius: 18px; padding: 12px; }
-  .real-map { min-width: 620px; }
-  .map-pin { min-width: 40px; min-height: 30px; border-radius: 10px; }
+  .map-toolbar { align-items: flex-start; flex-direction: column; gap: 4px; }
+  .real-map { min-width: 560px; }
+  .map-pin { width: 24px; height: 24px; border-width: 1.5px; box-shadow: 0 5px 12px rgba(0,0,0,0.22); }
+  .pin-label { font-size: 8.5px; }
   .stats { grid-template-columns: repeat(2, 1fr); }
 }

@@ -88,6 +88,14 @@ function renderMap(container, tables, onClick) {
       </div>
     </div>
   `;
+  const scroller = qs('.map-scroll', container);
+  const image = qs('.real-map img', container);
+  const centerMap = () => {
+    if (!scroller) return;
+    scroller.scrollLeft = Math.max(0, (scroller.scrollWidth - scroller.clientWidth) / 2);
+  };
+  if (image?.complete) requestAnimationFrame(centerMap);
+  else image?.addEventListener('load', centerMap, { once: true });
   qsa('.map-pin', container).forEach(pin => pin.addEventListener('click', () => onClick(Number(pin.dataset.tableId), pin.dataset.tableNumber)));
 }
 
