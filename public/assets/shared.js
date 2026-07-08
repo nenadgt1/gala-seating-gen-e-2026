@@ -9,6 +9,38 @@ const debounce = (fn, delay = 220) => {
   };
 };
 
+const TABLE_SECTION_COLORS = Object.freeze({
+  A: '#266075',
+  F: '#128d9c',
+  E: '#15a1b0',
+  D: '#1bbdc9',
+  C: '#8bd2da',
+  B: '#c5e8ef'
+});
+const TABLE_SECTION_TEXT_COLORS = Object.freeze({
+  A: '#ffffff',
+  F: '#ffffff',
+  E: '#ffffff',
+  D: '#17343d',
+  C: '#17343d',
+  B: '#17343d'
+});
+
+function tableSection(table) {
+  const fromSection = String(table?.section || '').trim().toUpperCase();
+  if (fromSection) return fromSection.charAt(0);
+  const fromNumber = String(table?.table_number || '').trim().toUpperCase().match(/[A-Z]$/);
+  return fromNumber ? fromNumber[0] : '';
+}
+
+function tablePinColor(table) {
+  return TABLE_SECTION_COLORS[tableSection(table)] || '#266075';
+}
+
+function tablePinTextColor(table) {
+  return TABLE_SECTION_TEXT_COLORS[tableSection(table)] || '#ffffff';
+}
+
 async function api(path, options = {}) {
   const headers = { ...(options.headers || {}) };
   const token = localStorage.getItem(options.tokenKey || 'gala_admin_token');
@@ -80,7 +112,7 @@ function renderMap(container, tables, onClick) {
       <div class="real-map">
         <img src="/assets/gala-seating-map.jpg" alt="Gala seating chart" loading="eager">
         ${tables.map(table => `
-          <button class="map-pin ${table.is_full ? 'is-full' : ''}" data-table-id="${table.id}" data-table-number="${escapeHtml(table.table_number)}" style="--x:${(table.x / 1440) * 100}%;--y:${(table.y / 810) * 100}%" title="Table ${escapeHtml(table.table_number)}: ${table.assigned_count}/${table.capacity}">
+          <button class="map-pin ${table.is_full ? 'is-full' : ''}" data-table-id="${table.id}" data-table-number="${escapeHtml(table.table_number)}" style="--x:${(table.x / 1440) * 100}%;--y:${(table.y / 810) * 100}%;--pin-bg:${tablePinColor(table)};--pin-fg:${tablePinTextColor(table)}" title="Table ${escapeHtml(table.table_number)}: ${table.assigned_count}/${table.capacity}">
             <span class="pin-label">${escapeHtml(table.table_number)}</span>
             <span class="pin-count">${table.assigned_count}/${table.capacity}</span>
           </button>
@@ -93,22 +125,9 @@ function renderMap(container, tables, onClick) {
   const centerMap = () => {
     if (!scroller) return;
     scroller.scrollLeft = Math.max(0, (scroller.scrollWidth - scroller.clientWidth) / 2);
-    scroller.scrollTop = 0;
   };
-  const scheduleCenter = () => {
-    requestAnimationFrame(() => {
-      centerMap();
-      window.setTimeout(centerMap, 80);
-      window.setTimeout(centerMap, 320);
-    });
-  };
-  if (image?.complete) scheduleCenter();
-  else image?.addEventListener('load', scheduleCenter, { once: true });
-  window.addEventListener('resize', debounce(centerMap, 120));
-  if ('ResizeObserver' in window && scroller) {
-    const observer = new ResizeObserver(() => centerMap());
-    observer.observe(scroller);
-  }
+  if (image?.complete) requestAnimationFrame(centerMap);
+  else image?.addEventListener('load', centerMap, { once: true });
   qsa('.map-pin', container).forEach(pin => pin.addEventListener('click', () => onClick(Number(pin.dataset.tableId), pin.dataset.tableNumber)));
 }
 
