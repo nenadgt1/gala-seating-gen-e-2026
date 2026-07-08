@@ -74,6 +74,10 @@ input:focus, select:focus, textarea:focus { border-color: var(--teal); box-shado
 .map-scroll { width: 100%; overflow: auto; border-radius: 18px; border: 1px solid var(--line); background: #dce6e8; text-align: center; }
 .real-map { position: relative; width: min(1120px, 100%); min-width: 920px; margin: 0 auto; text-align: left; }
 .real-map img { display: block; width: 100%; height: auto; }
+.map-entrance-marker { position: absolute; left: 50%; top: 96.2%; transform: translate(-50%, -100%); display: grid; justify-items: center; gap: 6px; pointer-events: none; z-index: 3; }
+.map-entrance-badge { display: inline-flex; align-items: center; justify-content: center; padding: 8px 14px; border-radius: 999px; background: rgba(255,255,255,0.94); color: var(--dark); border: 1px solid rgba(34,64,77,0.16); box-shadow: 0 10px 26px rgba(34,64,77,0.18); font-size: 12px; font-weight: 800; letter-spacing: 0.02em; text-transform: uppercase; white-space: nowrap; }
+.map-entrance-stem { width: 2px; height: 16px; background: rgba(255,255,255,0.95); border-radius: 999px; box-shadow: 0 0 0 1px rgba(34,64,77,0.08); }
+.map-entrance-dot { width: 10px; height: 10px; border-radius: 999px; background: rgba(255,255,255,0.98); border: 2px solid var(--dark); box-shadow: 0 4px 10px rgba(34,64,77,0.18); }
 .map-pin { position: absolute; left: var(--x); top: var(--y); transform: translate(-50%, -50%); border: 2px solid rgba(255,255,255,0.96); background: var(--pin-bg, var(--teal)); color: var(--pin-fg, #fff); border-radius: 999px; width: clamp(27px, 2.25vw, 34px); height: clamp(27px, 2.25vw, 34px); min-width: 0; min-height: 0; padding: 0; box-shadow: 0 8px 18px rgba(0,0,0,0.22); display: grid; place-items: center; gap: 0; transition: transform 0.16s, box-shadow 0.16s, background 0.16s; }
 .map-pin:hover { transform: translate(-50%, -50%) scale(1.08); z-index: 4; }
 .map-pin.is-full { background: var(--pin-bg, var(--teal)); }
@@ -142,6 +146,10 @@ input:focus, select:focus, textarea:focus { border-color: var(--teal); box-shado
   .panel { border-radius: 18px; padding: 12px; }
   .map-toolbar { align-items: flex-start; flex-direction: column; gap: 4px; }
   .real-map { min-width: 620px; }
+  .map-entrance-marker { gap: 4px; }
+  .map-entrance-badge { padding: 6px 10px; font-size: 10px; }
+  .map-entrance-stem { height: 12px; }
+  .map-entrance-dot { width: 8px; height: 8px; }
   .map-pin { width: 21px; height: 21px; border-width: 1.4px; box-shadow: 0 5px 12px rgba(0,0,0,0.22); }
   .pin-label { font-size: 7px; }
   .result-actions { display: grid; grid-template-columns: 1fr; }

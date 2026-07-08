@@ -111,6 +111,11 @@ function renderMap(container, tables, onClick) {
     <div class="map-scroll">
       <div class="real-map">
         <img src="/assets/gala-seating-map.jpg" alt="Gala seating chart" loading="eager">
+        <div class="map-entrance-marker" aria-hidden="true">
+          <span class="map-entrance-badge">Main entrance</span>
+          <span class="map-entrance-stem"></span>
+          <span class="map-entrance-dot"></span>
+        </div>
         ${tables.map(table => `
           <button class="map-pin ${table.is_full ? 'is-full' : ''}" data-table-id="${table.id}" data-table-number="${escapeHtml(table.table_number)}" style="--x:${(table.x / 1440) * 100}%;--y:${(table.y / 810) * 100}%;--pin-bg:${tablePinColor(table)};--pin-fg:${tablePinTextColor(table)}" title="Table ${escapeHtml(table.table_number)}: ${table.assigned_count}/${table.capacity}">
             <span class="pin-label">${escapeHtml(table.table_number)}</span>
