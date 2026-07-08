@@ -74,7 +74,7 @@ input:focus, select:focus, textarea:focus { border-color: var(--teal); box-shado
 .map-scroll { width: 100%; overflow: auto; border-radius: 18px; border: 1px solid var(--line); background: #dce6e8; text-align: center; }
 .real-map { position: relative; width: min(1120px, 100%); min-width: 920px; margin: 0 auto; text-align: left; }
 .real-map img { display: block; width: 100%; height: auto; }
-.map-entrance-marker { position: absolute; left: 48.6%; top: 96.2%; transform: translate(-50%, -100%); display: grid; justify-items: center; gap: 6px; pointer-events: none; z-index: 3; }
+.map-entrance-marker { position: absolute; left: 46.88%; top: 96.2%; transform: translate(-50%, -100%); display: grid; justify-items: center; gap: 6px; pointer-events: none; z-index: 3; }
 .map-entrance-badge { display: inline-flex; align-items: center; justify-content: center; padding: 8px 14px; border-radius: 999px; background: rgba(255,255,255,0.94); color: var(--dark); border: 1px solid rgba(34,64,77,0.16); box-shadow: 0 10px 26px rgba(34,64,77,0.18); font-size: 12px; font-weight: 800; letter-spacing: 0.02em; text-transform: uppercase; white-space: nowrap; }
 .map-entrance-stem { width: 2px; height: 16px; background: rgba(255,255,255,0.95); border-radius: 999px; box-shadow: 0 0 0 1px rgba(34,64,77,0.08); }
 .map-entrance-dot { width: 10px; height: 10px; border-radius: 999px; background: rgba(255,255,255,0.98); border: 2px solid var(--dark); box-shadow: 0 4px 10px rgba(34,64,77,0.18); }
