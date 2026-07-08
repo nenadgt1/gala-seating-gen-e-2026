@@ -6,16 +6,13 @@
   <title>Gala Seating Finder</title>
   <link rel="stylesheet" href="/assets/app.css">
 </head>
-<body>
+<body class="viewer-page">
   <main class="app-shell">
     <section class="hero">
       <div>
         <p class="kicker">Gala Seating System</p>
         <h1>Find your gala table</h1>
         <p>Search by name, organisation, country, or click a table on the room plan.</p>
-      </div>
-      <div class="hero-actions">
-        <span class="badge" data-status>Loading seating data</span>
       </div>
     </section>
 
@@ -41,7 +38,7 @@
         </div>
       </aside>
 
-      <section class="panel map-panel">
+      <section class="panel map-panel" id="room-plan">
         <div class="map-toolbar">
           <strong>Room plan</strong>
           <span>All tables are limited to 10 people</span>
