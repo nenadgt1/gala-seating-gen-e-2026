@@ -93,9 +93,22 @@ function renderMap(container, tables, onClick) {
   const centerMap = () => {
     if (!scroller) return;
     scroller.scrollLeft = Math.max(0, (scroller.scrollWidth - scroller.clientWidth) / 2);
+    scroller.scrollTop = 0;
   };
-  if (image?.complete) requestAnimationFrame(centerMap);
-  else image?.addEventListener('load', centerMap, { once: true });
+  const scheduleCenter = () => {
+    requestAnimationFrame(() => {
+      centerMap();
+      window.setTimeout(centerMap, 80);
+      window.setTimeout(centerMap, 320);
+    });
+  };
+  if (image?.complete) scheduleCenter();
+  else image?.addEventListener('load', scheduleCenter, { once: true });
+  window.addEventListener('resize', debounce(centerMap, 120));
+  if ('ResizeObserver' in window && scroller) {
+    const observer = new ResizeObserver(() => centerMap());
+    observer.observe(scroller);
+  }
   qsa('.map-pin', container).forEach(pin => pin.addEventListener('click', () => onClick(Number(pin.dataset.tableId), pin.dataset.tableNumber)));
 }
 
