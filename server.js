@@ -33,7 +33,7 @@ function readSeedTables() {
     id: Number(t.id || index + 1),
     table_number: String(t.table_number),
     section: String(t.section || '').toUpperCase(),
-    capacity: 10,
+    capacity: 12,
     x: Number(t.x),
     y: Number(t.y),
     notes: 'Gala seating chart 2026 real map'
@@ -56,7 +56,7 @@ function defaultData() {
 function normalizeData(data) {
   const seedTables = readSeedTables();
   const byNumber = new Map((data.tables || []).map(t => [String(t.table_number).toUpperCase(), t]));
-  const tables = seedTables.map(seed => ({ ...seed, ...(byNumber.get(seed.table_number.toUpperCase()) || {}), capacity: 10, x: seed.x, y: seed.y, section: seed.section }));
+  const tables = seedTables.map(seed => ({ ...seed, ...(byNumber.get(seed.table_number.toUpperCase()) || {}), capacity: 12, x: seed.x, y: seed.y, section: seed.section }));
   const validTableIds = new Set(tables.map(t => Number(t.id)));
   const attendees = (data.attendees || []).map((a, index) => normalizeAttendee({ ...a, id: Number(a.id || index + 1) }, validTableIds)).filter(Boolean);
   const pending = (data.pending || []).map((p, index) => ({
@@ -514,7 +514,7 @@ function validateAssignment(attendeeIds, tableId) {
   if (people.some(p => !p)) return { ok: false, error: 'One or more attendees were not found.' };
   if (table) {
     const current = countAssigned(table.id, ids);
-    if (current + ids.length > table.capacity) return { ok: false, error: `Table ${table.table_number} is full or would exceed 10 people.` };
+    if (current + ids.length > table.capacity) return { ok: false, error: `Table ${table.table_number} is full or would exceed ${table.capacity} people.` };
   }
   return { ok: true, people, table };
 }

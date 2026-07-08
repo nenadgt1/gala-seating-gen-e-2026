@@ -1,4 +1,4 @@
-const adminState = { tables: [], attendees: [], pending: [] };
+const adminState = { tables: [], attendees: [], pending: [], filters: {} };
 const ADMIN_TOKEN_KEY = 'gala_admin_token';
 
 async function initAdmin() {
@@ -41,7 +41,12 @@ function bindAdminApp() {
   qs('[data-export]').onclick = exportCsv;
   qs('[data-add-attendee]').onclick = addAttendee;
   qs('[data-search]').oninput = debounce(loadAttendees, 180);
-  qs('[data-clear-search]').onclick = async () => { qs('[data-search]').value = ''; await loadAttendees(); };
+  qs('[data-admin-org-filter]').onchange = loadAttendees;
+  qs('[data-clear-search]').onclick = async () => {
+    qs('[data-search]').value = '';
+    qs('[data-admin-org-filter]').value = '';
+    await loadAttendees();
+  };
   qs('[data-bulk-assign]').onclick = bulkAssign;
   qs('[data-bulk-unassign]').onclick = bulkUnassign;
   qs('[data-csv-file]').onchange = async event => {
@@ -53,6 +58,7 @@ function bindAdminApp() {
 
 async function refreshAll() {
   try {
+    await loadAdminFilters();
     await Promise.all([loadSummary(), loadPending(), loadAttendees()]);
   } catch (error) {
     if (/Authentication/i.test(error.message)) {
@@ -62,6 +68,17 @@ async function refreshAll() {
     }
     alert(error.message);
   }
+}
+
+async function loadAdminFilters() {
+  const select = qs('[data-admin-org-filter]');
+  if (!select) return;
+  const current = select.value;
+  const data = await api('/api/filters', { auth: false });
+  adminState.filters = data.filters || {};
+  const organisations = adminState.filters.organisation || [];
+  select.innerHTML = '<option value="">All organisations</option>' + organisations.map(value => `<option value="${escapeHtml(value)}">${escapeHtml(value)}</option>`).join('');
+  if (organisations.includes(current)) select.value = current;
 }
 
 async function loadSummary() {
@@ -103,7 +120,9 @@ function renderAdminTableGrid() {
 async function loadAttendees() {
   const params = new URLSearchParams();
   const query = qs('[data-search]').value.trim();
+  const organisation = qs('[data-admin-org-filter]')?.value || '';
   if (query) params.set('q', query);
+  if (organisation) params.set('organisation', organisation);
   params.set('limit', '500');
   const data = await api(`/api/admin/attendees?${params.toString()}`, { tokenKey: ADMIN_TOKEN_KEY });
   adminState.attendees = data.rows;

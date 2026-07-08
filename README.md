@@ -45,7 +45,7 @@ This app stores seating data in a small JSON database file. Render can attach a 
 1. Log in with `ADMIN_PASSWORD`.
 2. Import the attendee CSV in the admin panel.
 3. Use `table_number` values exactly as shown on the chart, for example `1A`, `7C`, `15F`.
-4. Every table has a hard capacity of 10 people.
+4. Every table has a hard capacity of 12 people.
 5. Moderator requests appear in the pending panel. Approving a request changes the attendee table only if the requested table still has capacity.
 
 ## Supported CSV columns

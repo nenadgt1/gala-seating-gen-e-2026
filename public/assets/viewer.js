@@ -8,8 +8,7 @@ async function initViewer() {
   state.tables = tablesData.tables;
   renderMap(qs('[data-map]'), state.tables, loadTableModal);
   renderFilters(filtersData.filters, qs('[data-filters]'), [
-    ['organisation', 'Organisation'],
-    ['country', 'Country']
+    ['organisation', 'Organisation']
   ]);
   bindViewer();
   await runSearch();
