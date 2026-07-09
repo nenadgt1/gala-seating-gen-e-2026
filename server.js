@@ -168,7 +168,7 @@ function tablesWithCounts() {
   return db.tables.map(t => ({
     ...t,
     assigned_count: countAssigned(t.id),
-    is_full: countAssigned(t.id) >= Number(t.capacity || 10)
+    is_full: countAssigned(t.id) >= Number(t.capacity || 12)
   }));
 }
 
@@ -349,9 +349,13 @@ function importCsv(csv, mode) {
     const existing = a.email
       ? db.attendees.find(x => x.email && x.email.toLowerCase() === a.email.toLowerCase())
       : db.attendees.find(x => x.first_name.toLowerCase() === a.first_name.toLowerCase() && x.last_name.toLowerCase() === a.last_name.toLowerCase() && x.organisation.toLowerCase() === a.organisation.toLowerCase());
-    if (a.table_id && countAssigned(a.table_id, existing ? [existing.id] : []) >= 10) {
-      errors.push(`${a.first_name} ${a.last_name}: table ${tableById(a.table_id)?.table_number || a.table_id} is full.`);
-      a.table_id = 0;
+    if (a.table_id) {
+      const targetTable = tableById(a.table_id);
+      const capacity = Number(targetTable?.capacity || 12);
+      if (countAssigned(a.table_id, existing ? [existing.id] : []) >= capacity) {
+        errors.push(`${a.first_name} ${a.last_name}: table ${targetTable?.table_number || a.table_id} is full.`);
+        a.table_id = 0;
+      }
     }
     if (existing) {
       Object.assign(existing, a, { id: existing.id, created_at: existing.created_at || nowIso(), updated_at: nowIso() });
@@ -612,7 +616,10 @@ async function handleApi(req, res, url) {
         const validTableIds = new Set(db.tables.map(t => Number(t.id)));
         const attendee = normalizeAttendee({ ...body, id: nextId(db.attendees) }, validTableIds);
         if (!attendee) return json(res, 400, { ok: false, error: 'Please add at least a name or an email.' });
-        if (attendee.table_id && countAssigned(attendee.table_id) >= 10) return json(res, 400, { ok: false, error: 'That table is already full.' });
+        if (attendee.table_id) {
+          const table = tableById(attendee.table_id);
+          if (table && countAssigned(attendee.table_id) >= Number(table.capacity || 12)) return json(res, 400, { ok: false, error: 'That table is already full.' });
+        }
         db.attendees.push(attendee);
         saveData(db);
         return json(res, 200, { ok: true, attendee: adminAttendee(attendee) });
@@ -624,7 +631,10 @@ async function handleApi(req, res, url) {
         if (!attendee) return json(res, 404, { ok: false, error: 'Attendee not found.' });
         const validTableIds = new Set(db.tables.map(t => Number(t.id)));
         const normalized = normalizeAttendee({ ...attendee, ...body, id: attendee.id, created_at: attendee.created_at }, validTableIds);
-        if (normalized.table_id && countAssigned(normalized.table_id, [attendee.id]) >= 10) return json(res, 400, { ok: false, error: 'That table is already full.' });
+        if (normalized.table_id) {
+          const table = tableById(normalized.table_id);
+          if (table && countAssigned(normalized.table_id, [attendee.id]) >= Number(table.capacity || 12)) return json(res, 400, { ok: false, error: 'That table is already full.' });
+        }
         Object.assign(attendee, normalized, { id: attendee.id, updated_at: nowIso() });
         saveData(db);
         return json(res, 200, { ok: true, attendee: adminAttendee(attendee) });
